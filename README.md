@@ -12,10 +12,6 @@ Joomla content plugin that adds a configurable "Read with AI" block to article p
 - Adds a prompt copy button and outbound AI links containing the current article URL.
 - Includes a WebTolk installer script and plugin info field.
 
-## Build
+## Packaging
 
-```powershell
-php D:/.agents/tools/phing-packager/phing-latest.phar -f D:/.agents/tools/phing-packager/build.xml -Dconfig=D:/Dev/wt-read-in-ai/.dist/build/package.config.json "3. Package release"
-```
-
-The installable plugin ZIP is written to `.packages/`.
+The repository root is the Joomla plugin root. To create an installable package, zip the repository contents without Git metadata or local development folders.
