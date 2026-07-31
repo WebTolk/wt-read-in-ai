@@ -1,0 +1,9 @@
+{
+  "name": "webtolk/plg-content-wtreadinai",
+  "description": "Joomla content plugin that adds a Read with AI block to articles.",
+  "type": "joomla-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.1"
+  }
+}

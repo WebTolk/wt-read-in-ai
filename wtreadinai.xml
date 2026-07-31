@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="content" method="upgrade">
+    <name>PLG_CONTENT_WTREADINAI</name>
+    <author>WebTolk</author>
+    <creationDate>31.07.2026</creationDate>
+    <copyright>Copyright (c) 2026 WebTolk. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>info@web-tolk.ru</authorEmail>
+    <authorUrl>https://web-tolk.ru</authorUrl>
+    <version>1.0.0</version>
+    <description>PLG_CONTENT_WTREADINAI_XML_DESCRIPTION</description>
+    <namespace path="src">Webtolk\Plugin\Content\WtReadInAi</namespace>
+    <scriptfile>script.php</scriptfile>
+    <files>
+        <folder plugin="wtreadinai">services</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+        <folder>language</folder>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_content_wtreadinai.ini</language>
+        <language tag="en-GB">language/en-GB/plg_content_wtreadinai.sys.ini</language>
+        <language tag="ru-RU">language/ru-RU/plg_content_wtreadinai.ini</language>
+        <language tag="ru-RU">language/ru-RU/plg_content_wtreadinai.sys.ini</language>
+    </languages>
+    <media destination="plg_content_wtreadinai" folder="media">
+        <folder>css</folder>
+        <folder>js</folder>
+    </media>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="plugininfo"
+                    type="plugininfo"
+                    addfieldprefix="Webtolk\Plugin\Content\WtReadInAi\Field"
+                />
+                <field
+                    name="enabled"
+                    type="radio"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_ENABLED_LABEL"
+                    default="1"
+                    layout="joomla.form.field.radio.switcher"
+                    filter="integer"
+                    >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                    name="layout"
+                    type="filelist"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_LAYOUT_LABEL"
+                    description="PLG_CONTENT_WTREADINAI_FIELD_LAYOUT_DESC"
+                    default="default"
+                    directory="plugins/content/wtreadinai/tmpl"
+                    fileFilter="\.php$"
+                    exclude="index\.html"
+                    stripext="true"
+                    hide_none="true"
+                    hide_default="true"
+                    filter="cmd"
+                />
+                <field
+                    name="render_event"
+                    type="list"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_RENDER_EVENT_LABEL"
+                    description="PLG_CONTENT_WTREADINAI_FIELD_RENDER_EVENT_DESC"
+                    default="onContentAfterDisplay"
+                    filter="cmd"
+                    validate="options"
+                    >
+                    <option value="onContentAfterTitle">PLG_CONTENT_WTREADINAI_FIELD_RENDER_EVENT_AFTER_TITLE</option>
+                    <option value="onContentBeforeDisplay">PLG_CONTENT_WTREADINAI_FIELD_RENDER_EVENT_BEFORE_DISPLAY</option>
+                    <option value="onContentAfterDisplay">PLG_CONTENT_WTREADINAI_FIELD_RENDER_EVENT_AFTER_DISPLAY</option>
+                </field>
+                <field
+                    name="show_categories"
+                    type="category"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_SHOW_CATEGORIES_LABEL"
+                    description="PLG_CONTENT_WTREADINAI_FIELD_SHOW_CATEGORIES_DESC"
+                    extension="com_content"
+                    multiple="true"
+                    layout="joomla.form.field.list-fancy-select"
+                    filter="int_array"
+                />
+                <field
+                    name="hide_categories"
+                    type="category"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_HIDE_CATEGORIES_LABEL"
+                    description="PLG_CONTENT_WTREADINAI_FIELD_HIDE_CATEGORIES_DESC"
+                    extension="com_content"
+                    multiple="true"
+                    layout="joomla.form.field.list-fancy-select"
+                    filter="int_array"
+                />
+                <field
+                    name="title"
+                    type="text"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_TITLE_LABEL"
+                    default="Прочитать с ИИ"
+                    filter="string"
+                />
+                <field
+                    name="intro_text"
+                    type="textarea"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_INTRO_TEXT_LABEL"
+                    default="Короткий промпт для резюме, выводов и применения к вашей задаче."
+                    rows="3"
+                    filter="safehtml"
+                />
+                <field
+                    name="copy_button_label"
+                    type="text"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_COPY_BUTTON_LABEL"
+                    default="Копировать промпт"
+                    filter="string"
+                />
+                <field
+                    name="copied_button_label"
+                    type="text"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_COPIED_BUTTON_LABEL"
+                    default="Скопировано"
+                    filter="string"
+                />
+                <field
+                    name="starter_prompt"
+                    type="textarea"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_STARTER_PROMPT_LABEL"
+                    description="PLG_CONTENT_WTREADINAI_FIELD_STARTER_PROMPT_DESC"
+                    default="Прочитай материал по ссылке ниже. Сделай краткое резюме, выдели главные выводы и предложи, как применить это к моей задаче."
+                    rows="5"
+                    filter="string"
+                />
+                <field
+                    name="services"
+                    type="subform"
+                    label="PLG_CONTENT_WTREADINAI_FIELD_SERVICES_LABEL"
+                    description="PLG_CONTENT_WTREADINAI_FIELD_SERVICES_DESC"
+                    multiple="true"
+                    layout="joomla.form.field.subform.repeatable-table"
+                    buttons="add,remove,move"
+                    default='[{"title":"ChatGPT","base_url":"https://chatgpt.com/","query_param":"q","enabled":"1"},{"title":"Claude","base_url":"https://claude.ai/new","query_param":"q","enabled":"1"}]'
+                    >
+                    <form>
+                        <field
+                            name="enabled"
+                            type="radio"
+                            label="PLG_CONTENT_WTREADINAI_FIELD_SERVICE_ENABLED_LABEL"
+                            default="1"
+                            layout="joomla.form.field.radio.switcher"
+                            filter="integer"
+                            >
+                            <option value="0">JNO</option>
+                            <option value="1">JYES</option>
+                        </field>
+                        <field
+                            name="title"
+                            type="text"
+                            label="PLG_CONTENT_WTREADINAI_FIELD_SERVICE_TITLE_LABEL"
+                            filter="string"
+                            required="true"
+                        />
+                        <field
+                            name="base_url"
+                            type="url"
+                            label="PLG_CONTENT_WTREADINAI_FIELD_SERVICE_BASE_URL_LABEL"
+                            filter="url"
+                            required="true"
+                        />
+                        <field
+                            name="query_param"
+                            type="text"
+                            label="PLG_CONTENT_WTREADINAI_FIELD_SERVICE_QUERY_PARAM_LABEL"
+                            default="q"
+                            filter="cmd"
+                            required="true"
+                        />
+                    </form>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

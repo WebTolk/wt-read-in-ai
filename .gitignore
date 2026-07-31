@@ -1,0 +1,13 @@
+.pf/
+.dist/
+.packages/
+.idea/
+.playwright-mcp/
+.serena/
+.pf/runtime/
+.pf/private-notes/
+.pf/cache/
+.secrets/
+*.tmp
+*.bak
+phing.xml
